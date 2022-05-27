@@ -1,0 +1,60 @@
+<%- include('assets/navbar') %> <%- include('assets/header') %>
+
+<div class="row" style="justify-content: center">
+  <div class="col-sm-6 mt-5">
+    <h2 class="alert alert-secondary text-center">Product List</h2>
+
+    <form class="d-flex">
+      <input 
+      name="search" type="search" class="form-control me-2" placeholder="Search" aria-label="Search" aria-describedby="search-addon" autocomplete="off">
+      <button class="btn btn-outline-dark" type="submit">Search</button>
+    </form>
+
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Name</th>
+          <th scope="col">Description </th>
+          <th scope="col">Price</th>
+          <th scope="col">Discount</th>
+          <th scope="col">Image</th>
+          <th scope="col">Edit</th>
+          <th scope="col">Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <tr>
+            <% data.forEach((item,i)=>{ %>
+          <tr>
+          <td><%= (i+1) %></td>
+          <td><%= item.name %> </td>
+          <td><%= item.desc %></td>
+          <td><%= item.price %></td>
+          <td><%= item.discount %></td>
+          <td><%= item.image %></5></td>
+          <td>
+            <a href="">
+              <button type="button" class="btn btn-outline-info btn-sm">
+                Edit
+              </button>
+            </a>
+          </td>
+          <td>
+            <a href="/product/delete/<%= item.id %>">
+              <button type="button" class="btn btn-outline-danger btn-sm">
+                Delete
+              </button>
+            </a>
+          </td>
+          <% }) %>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+
+<%- include('assets/footer') %>

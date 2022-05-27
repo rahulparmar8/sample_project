@@ -1,0 +1,22 @@
+{
+  "name": "sample_project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "npx tsc && nodemon build/app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/express": "^4.17.13",
+    "body-parser": "^1.20.0",
+    "ejs": "^3.1.8",
+    "express": "^4.18.1",
+    "express-validator": "^6.14.1",
+    "mongoose": "^6.3.4",
+    "nodemon": "^2.0.16",
+    "ts-node": "^10.8.0"
+  }
+}
