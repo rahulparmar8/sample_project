@@ -10,6 +10,7 @@ const productSchema = new mongoose_1.default.Schema({
     price: { type: String },
     discount: { type: Number },
     image: { type: String },
+    status: { type: Number, enum: [0, 1], default: 1 },
 });
 const productModel = mongoose_1.default.model("product", productSchema);
 exports.default = productModel;

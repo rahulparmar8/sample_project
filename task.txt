@@ -1,0 +1,11 @@
+-Product CRUD (with mongo)
+-Add/edit Product(proper validation,Take image as input)
+    -List Product  
+    -Search by name,price & discount 
+    -Sort by name,price(asc,desc)
+    -Pagination (server side)
+    -Delete Product(confirmation on delete)
+    -View Product 
+-Enable/Disble product  
+
+

@@ -4,7 +4,7 @@
         <div class="row" style="justify-content: center">
             <div class="col-sm-6 mt-5">
                 <h2 class="alert alert-info text-center">Add Product</h2>
-                <form method="POST">
+                <form method="POST" enctype="multipart/form-data">
                     <div class="mb-3">
                         <label for="name" class="form-label">Name</label>
                         <input   id="name" name="name" type="text" class="form-control" autocomplete="off" />
@@ -13,10 +13,20 @@
                         %> <% if(error.param=='name' ){%>
                         <div style="color: red"><%= error.msg %></div>
                         <%} })} %>
+            
                     <div class="mb-3">
                         <label for="desc" class="form-label">desc</label>
-                        <input  id="desc" name="desc" type="text" class="form-control" autocomplete="off" />
+                        <textarea 
+                            class="form-control"
+                            id="desc"
+                            name="desc" 
+                            type="text" 
+                            class="form-control" 
+                            autocomplete="off" 
+                            rows="3"></textarea>
                     </div>
+
+
                     <% if(typeof alert !='undefined' ) { %> <% alert.forEach(function(error) {
                         %> <% if(error.param=='desc' ){%>
                         <div style="color: red"><%= error.msg %></div>
@@ -37,14 +47,14 @@
                         %> <% if(error.param=='discount' ){%>
                         <div style="color: red"><%= error.msg %></div>
                         <%} })} %>
+
                     <div class="form-group col-6">
                         <label for="productFile">Image</label><span class="important">*</span>
                         <input  type="file" class="form-control" id="image" name="image" />
                     </div>
-                    <% if(typeof alert !='undefined' ) { %> <% alert.forEach(function(error) {
-                        %> <% if(error.param=='image' ){%>
-                        <div style="color: red"><%= error.msg %></div>
-                        <%} })} %>
+                  
+
+                        <br />
                     <button type="submit" class="btn btn-outline-primary">Submit</button>
                 </form>
             </div>

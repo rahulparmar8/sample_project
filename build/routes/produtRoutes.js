@@ -6,18 +6,19 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const produtController_1 = __importDefault(require("../controllers/produtController"));
 const express_validator_1 = require("express-validator");
+const uploadImage_1 = require("../helper/uploadImage");
+const multer = require('multer');
 const product = new produtController_1.default();
 const router = express_1.default.Router();
+//const upload = multer({ dest: "../uploads" });
 router.get("/add/", product.productAddPage);
-router.post("/add/", (0, express_validator_1.check)("name", "Name is required. Please enter your response. ")
-    .not()
-    .isEmpty(), (0, express_validator_1.check)("desc", "Desc is required. Please enter your response. ")
+router.post("/add/", uploadImage_1.upload.single("image"), (0, express_validator_1.check)("name", "Name is required. Please enter your Name. ").not().isEmpty(), (0, express_validator_1.check)("desc", "Desc is required. Please enter your Description. ")
     .not()
     .isEmpty(), (0, express_validator_1.check)("discount")
     .not()
     .isEmpty()
     .trim()
-    .withMessage("Discount is required. Please enter your response. ")
+    .withMessage("Discount is required. Please enter your Discount. ")
     .bail()
     .isDecimal()
     .withMessage("Discount must be decimal"), (0, express_validator_1.check)("price")
@@ -27,9 +28,11 @@ router.post("/add/", (0, express_validator_1.check)("name", "Name is required. P
     .withMessage("Product Price is required.")
     .bail()
     .isDecimal()
-    .withMessage("Price must be decimal"), (0, express_validator_1.check)("image", "Image is required. Please enter your response. ")
-    .not()
-    .isEmpty(), product.productAddData);
-router.get("/list", product.listProduct);
+    .withMessage("Price must be decimal"), product.productAddData);
+router.get("/list/:page", product.listProduct);
+router.get("/edit/:id", product.editProductPage);
+router.post("/edit/:id", uploadImage_1.upload.single("image"), product.editProductData);
+router.get("/view/:id", product.viewProductPage);
+router.get("/data/status", product.statusChange);
 router.get("/delete/:id", product.deleteProduct);
 exports.default = router;
