@@ -8,11 +8,18 @@ const path_1 = __importDefault(require("path"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const produtRoutes_1 = __importDefault(require("./routes/produtRoutes"));
 const body_parser_1 = __importDefault(require("body-parser"));
+const express_session_1 = __importDefault(require("express-session"));
 const app = (0, express_1.default)();
 const port = 3000;
 const DATABASE_URL = "mongodb://localhost:27017/node_practice";
 const multer = require('multer');
 const upload = multer({ dest: "../uploads" });
+// Session //
+app.use((0, express_session_1.default)({
+    secret: "imkey",
+    resave: false,
+    saveUninitialized: true,
+}));
 app.use(express_1.default.static("build"));
 app.use(express_1.default.static("uploads"));
 app.use(express_1.default.static(path_1.default.join(__dirname, "build/uploads")));

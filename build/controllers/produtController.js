@@ -35,7 +35,7 @@ class Product {
             try {
                 // console.log('file===>',JSON.stringify(req.file))
                 const errors = (0, express_validator_1.validationResult)(req);
-                console.log('errors====', errors);
+                // console.log('errors====', errors)
                 if (!errors.isEmpty()) {
                     const result = yield produtModels_js_1.default.find();
                     return res.render("addproduct", {
@@ -44,7 +44,7 @@ class Product {
                         data: result,
                     });
                 }
-                console.log('dh====>>', req.file);
+                // console.log('dh====>>', req.file)
                 const { name, desc, discount, price, image, status } = req.body;
                 // console.log("Body", req.body);
                 const data = new produtModels_js_1.default({
@@ -62,7 +62,7 @@ class Product {
                 }
                 const result = yield produtModels_js_1.default.create(body);
                 // console.log("save====>", result);
-                return res.redirect("/product/list/1");
+                return res.redirect("/product/list");
             }
             catch (error) {
                 console.log(error);
@@ -72,7 +72,7 @@ class Product {
         this.listProduct = (req, res) => __awaiter(this, void 0, void 0, function* () {
             try {
                 const perPage = 5;
-                const page = req.params.page || 1;
+                const page = req.query.page || 1;
                 const recievedData = (0, sorts_1.sorting)(req.query);
                 // let searchKeyword = req.query.search;
                 const searchKeyword = req.query.search;
@@ -125,14 +125,20 @@ class Product {
         //    POST Edit Product Data     //
         this.editProductData = (req, res) => __awaiter(this, void 0, void 0, function* () {
             try {
+                // const id = req.params.id;
+                // const body = req.body;
+                // if (req.file) {
+                //   body.image = req.file.filename;
+                //   deleteFileExt(req.body.productImage);
+                // }
                 const body = req.body;
                 if (req.file) {
                     body.image = req.file.filename;
                 }
-                const result = yield produtModels_js_1.default.findByIdAndUpdate(req.params.id, req.body);
-                console.log("img", req.files);
-                console.log("Reshult=>>>", result);
-                return res.redirect("/product/list/1");
+                const result = yield produtModels_js_1.default.findByIdAndUpdate(req.params.id, req.body, body);
+                // console.log("img", req.file);
+                // console.log("reshult=>>>", result);
+                return res.redirect("/product/list");
             }
             catch (error) {
                 console.log(error);
@@ -157,18 +163,34 @@ class Product {
                 console.log(error);
             }
         });
-        this.statusChange = (req, res) => {
+        this.statusChange = (req, res) => __awaiter(this, void 0, void 0, function* () {
             try {
+                // console.log("in api");
+                const data = req.params.data;
+                const id = req.params.id;
+                const queryData = req.query;
+                // console.log(data);
+                // console.log(queryData);
+                const dataChange = yield produtModels_js_1.default.updateOne({ _id: id }, data === "0" ? { status: 1 } : { status: 0 });
+                // console.log("status", dataChange);
+                if (!dataChange) {
+                    return res.redirect("/product/list");
+                }
+                const qs = Object.keys(queryData)
+                    .map((key) => `${key}=${queryData[key]}`)
+                    .join("&");
+                return res.redirect(`/product/list?${qs}`);
             }
             catch (error) {
                 console.log(error);
             }
-        };
+        });
         //  Delete Product Data     //
         this.deleteProduct = (req, res) => __awaiter(this, void 0, void 0, function* () {
             try {
                 const result = yield produtModels_js_1.default.findByIdAndDelete(req.params.id);
-                return res.redirect("/product/list/1");
+                // console.log(req.params.id);
+                return res.redirect("/product/list");
             }
             catch (error) {
                 console.log(error);

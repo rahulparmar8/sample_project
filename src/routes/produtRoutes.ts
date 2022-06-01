@@ -31,13 +31,12 @@ upload.single("image"),
     .bail()
     .isDecimal()
     .withMessage("Price must be decimal"),
-  
   product.productAddData);
-router.get("/list/:page", product.listProduct);
+router.get("/list/", product.listProduct);
 router.get("/edit/:id", product.editProductPage);
 router.post("/edit/:id", upload.single("image"), product.editProductData);
 router.get("/view/:id", product.viewProductPage);
-router.get("/data/status",  product.statusChange);
+router.get("/list/status/:id/:data",  product.statusChange);
 router.get("/delete/:id", product.deleteProduct);
 
 export default router;

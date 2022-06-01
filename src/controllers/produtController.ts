@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
 import productModel from "../models/produtModels.js";
 import { sorting } from "../helper/sorts";
+import { deleteFileExt } from "../helper/deleteFile";
 import { validationResult } from "express-validator";
 import multer from "multer";
 import mongoose from "mongoose";
@@ -23,7 +24,7 @@ export default class Product {
     try {
       // console.log('file===>',JSON.stringify(req.file))
       const errors = validationResult(req);
-      console.log('errors====', errors)
+      // console.log('errors====', errors)
       if (!errors.isEmpty()) {
         const result = await productModel.find();
         return res.render("addproduct", {
@@ -32,7 +33,7 @@ export default class Product {
           data: result,
         });
       }
-      console.log('dh====>>', req.file)
+      // console.log('dh====>>', req.file)
       const { name, desc, discount, price, image, status } = req.body;
       // console.log("Body", req.body);
       const data = new productModel({
@@ -51,7 +52,7 @@ export default class Product {
       const result = await productModel.create(body);
       // console.log("save====>", result);
 
-      return res.redirect("/product/list/1");
+      return res.redirect("/product/list");
     } catch (error) {
       console.log(error);
     }
@@ -61,7 +62,7 @@ export default class Product {
   listProduct = async (req: Request, res: Response) => {
     try {
       const perPage = 5;
-      const page = req.params.page || 1;
+      const page = req.query.page || 1;
       const recievedData = sorting(req.query);
       // let searchKeyword = req.query.search;
       const searchKeyword = req.query.search as string;
@@ -120,18 +121,22 @@ export default class Product {
   //    POST Edit Product Data     //
   editProductData = async (req: Request, res: Response) => {
     try {
+      // const id = req.params.id;
+      // const body = req.body;
+      // if (req.file) {
+      //   body.image = req.file.filename;
+      //   deleteFileExt(req.body.productImage);
+      // }
       const body = req.body;
       if (req.file) {
         body.image = req.file.filename;
       }
-      const result = await productModel.findByIdAndUpdate(
-        req.params.id,
-        req.body,
-      );
-      console.log("img", req.files);
-      console.log("Reshult=>>>", result);
 
-      return res.redirect("/product/list/1");
+      const result = await productModel.findByIdAndUpdate(req.params.id, req.body, body);
+      // console.log("img", req.file);
+      // console.log("reshult=>>>", result);
+
+      return res.redirect("/product/list");
     } catch (error) {
       console.log(error);
     }
@@ -158,8 +163,30 @@ export default class Product {
     }
   };
 
-  statusChange = (req: Request, res: Response) => {
+  statusChange = async (req: Request, res: Response) => {
     try {
+      // console.log("in api");
+      const data = req.params.data as string;
+      const id = req.params.id;
+      const queryData = req.query;
+      // console.log(data);
+      // console.log(queryData);
+
+      const dataChange = await productModel.updateOne(
+        { _id: id },
+        data === "0" ? { status: 1 } : { status: 0 }
+      );
+      // console.log("status", dataChange);
+
+      if (!dataChange) {
+        return res.redirect("/product/list");
+      }
+
+      const qs = Object.keys(queryData)
+        .map((key) => `${key}=${queryData[key]}`)
+        .join("&");
+
+      return res.redirect(`/product/list?${qs}`);
 
     } catch (error) {
       console.log(error);
@@ -171,7 +198,9 @@ export default class Product {
   deleteProduct = async (req: Request, res: Response) => {
     try {
       const result = await productModel.findByIdAndDelete(req.params.id);
-      return res.redirect("/product/list/1");
+      // console.log(req.params.id);
+
+      return res.redirect("/product/list");
     } catch (error) {
       console.log(error);
     }

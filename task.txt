@@ -9,3 +9,8 @@
 -Enable/Disble product  
 
 
+Product img shud be png and jpg
+    page shud be readirec to list page after change status
+delete privesh img after add new img in edit product
+last inserted product come first in list
+    pagination not working after applying sorting

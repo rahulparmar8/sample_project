@@ -3,7 +3,7 @@ import path from "path";
 import mongoose from "mongoose";
 import productRoutes from "./routes/produtRoutes";
 import bodyParser from "body-parser";
-
+import session from "express-session";
 
 const app = express();
 const port = 3000;
@@ -11,6 +11,17 @@ const DATABASE_URL = "mongodb://localhost:27017/node_practice";
 
 const multer = require('multer')
 const upload = multer({ dest: "../uploads" });
+
+
+// Session //
+app.use(
+  session({
+      secret: "imkey",
+      resave: false,
+      saveUninitialized: true,
+  })
+);
+
 
 app.use(express.static("build"));
 app.use(express.static("uploads"));

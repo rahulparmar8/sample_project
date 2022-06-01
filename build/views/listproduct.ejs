@@ -1,132 +1,17 @@
 <%- include('assets/navbar') %>
   <%- include('assets/header') %>
-<div class="container">
-    <div class="row">
+  <div class="row" style="justify-content: center">
+  
       <div class="col-sm-6 mt-5">
         <h2 class="alert alert-secondary text-center">Product List</h2>
         <form class="d-flex">
           <input placeholder="search by name, discount, price" value="<%= queryData && queryData.search %>" name="search" type="search" class="form-control me-2" placeholder="Search" aria-label="Search"
             aria-describedby="search-addon" autocomplete="off" />
-          <button class="btn btn-outline-dark" type="submit">Search</button>
+          <button class="btn btn-outline-dark" type="submit">Search</button> &nbsp; &nbsp;
+          <a href="/product/list/"  class="btn btn-primary">Reset </a>&nbsp; &nbsp;
+          <a href="/product/add/"  class="btn btn-primary">Add </a>
         </form>
-        <!-- <style>
-table td,
-table th {
-
-border: 1px solid rgb(235, 225, 225);
-}
-
-.headerSortDown:after,
-.headerSortUp:after {
-content: ' ';
-position: relative;
-left: 2px;
-border: 8px solid transparent;
-}
-
-.headerSortDown:after {
-top: 10px;
-border-top-color: rgb(219, 9, 9);
-}
-
-.headerSortUp:after {
-bottom: 15px;
-border-bottom-color: rgb(7, 162, 173);
-}
-
-.headerSortDown,
-.headerSortUp {
-padding-right: 10px;
-}
-  .bg-custom-1 {
-background-color: #d32727;
-}
-
-.bg-custom-2 {
-background-image: linear-gradient(15deg, #922534 0%, #10bea1 100%);
-}
-table-sortable th {
-cursor: pointer;
-}
-
-.table-sortable .th-sort-asc::after {
-content: "\25b4";
-}
-
-.table-sortable .th-sort-desc::after {
-content: "\25be";
-}
-
-.table-sortable .th-sort-asc::after,
-.table-sortable .th-sort-desc::after {
-margin-left: 5px;
-}
-
-.table-sortable .th-sort-asc,
-.table-sortable .th-sort-desc {
-background: rgba(28, 134, 138, 0.1);
-}
-
-        </style>
-
-<table class="table-sortable">
-  <thead>
-    <tr style="">
-      <th>id</th>
-      <th>Name</th>
-      <th>Description</th>
-      <th>Price</th>
-    <th>Discount</th>
-<th>Image</th>
-<th>Status</th>
-<th>view</th>
-<th>Edit</th>
-<th>Delete</th>
-</tr>
-</thead>
-<tbody>
-
-  <% for(var i = 0; i < data.length; i++) { %> 
   
-    <tr>
-      
-        <td><%= i + 1 %></td>
-        <td><%= data[i].name %></td>
-        <td><%= data[i].desc%></td>
-        <td><%= data[i].price %></td>
-       <td> <%= data[i].discount %></td>
-       <td> <%= data[i].image %></td> 
-       <td> <%= data[i].status %></td> 
-       <td><a href='view/${products[i].id}' class='btn btn-warning'>View</a></td></tr>
-       <td><img src="uploads/<%=data[i].image%>" style="max-height:75px;width:130px;" alt="image" ></td> 
-       <td> <a href ='/update/<%=data[i]._id%>' <button type="submit" colspan="3" class="btn btn-success">UPDATE</button></td> </a>
-       <td>
-        <a href="/product/edit/<%=data[i]._id%>">
-          <button type="button" class="btn btn-info btn-sm">
-            Edit
-          </button>
-        </a>
-      </td>  
-         
-           
-          
-            </a>
-            <td>
-            <a href ='/delete/<%=data[i].id%>' class="btn btn-danger"onClick="return confirm('Are you sure you want to delete?')">delete</button></td> </a>
-           
-          
-          
-  
-          
-              
-        
-    </tr>
-    
-  
-     <% } %> 
-  </tr>
-  
-          </tbody> -->
   
         <table class="table table-striped">
           <thead>
@@ -134,19 +19,19 @@ background: rgba(28, 134, 138, 0.1);
               <th scope="col">#</th>
               <th scope="col">Name
                 <a
-                  href="/product/list/1<%= queryData && queryData.search ? `?search=${queryData.search}&` : '?' %>sortby=name&sorttype=1&page=<%= current ? current : 1 %>"><i
+                  href="/product/list/<%= queryData && queryData.search ? `?search=${queryData.search}&` : '?' %>sortby=name&sorttype=1&page=<%= current ? current : 1 %>"><i
                   class="fa fa-arrow-down" style="color: white"></i></a>
                 <a
-                  href="/product/list/1<%= queryData && queryData.search ? `?search=${queryData.search}&` : '?' %>sortby=name&sorttype=-1&page=<%= current ? current : 1 %>"><i
+                  href="/product/list/<%= queryData && queryData.search ? `?search=${queryData.search}&` : '?' %>sortby=name&sorttype=-1&page=<%= current ? current : 1 %>"><i
                   class="fa fa-arrow-up" style="color: white"></i></a>
               </th>
               <th scope="col">Description</th>
               <th scope="col">Price
                 <a
-                href="/product/list/1<%= queryData && queryData.search ? `?search=${queryData.search}&` : '?' %>sortby=price&sorttype=1&page=<%= current ? current : 1 %>"><i
+                href="/product/list/<%= queryData && queryData.search ? `?search=${queryData.search}&` : '?' %>sortby=price&sorttype=1&page=<%= current ? current : 1 %>"><i
                 class="fa fa-arrow-down" style="color: white"></i></a>
                 <a
-                href="/product/list/1<%= queryData && queryData.search ? `?search=${queryData.search}&` : '?' %>sortby=price&sorttype=-1&page=<%= current ? current : 1 %>"><i
+                href="/product/list/<%= queryData && queryData.search ? `?search=${queryData.search}&` : '?' %>sortby=price&sorttype=-1&page=<%= current ? current : 1 %>"><i
                 class="fa fa-arrow-up" style="color: white"></i></a>
               </th>
               <th scope="col">Discount</th>
@@ -183,11 +68,14 @@ background: rgba(28, 134, 138, 0.1);
               <td>
                 <img src="/uploads/<%= item.image %>" height="100px" width="100px" alt="image" />
               </td>
+            
               <td>
+
                 <button onclick="changeStatus('<%= item._id %>' , '<%= item.status %>')"
                   class="<%= item.status == 1 ? 'btn btn-success' : 'btn btn-danger' %>">
                   <%= item.status==1 ? 'Active' : 'Inactive' %>
                 </button>
+
               </td>
 
               <td>
@@ -205,7 +93,8 @@ background: rgba(28, 134, 138, 0.1);
                   </button>
                 </a>
               </td>
-
+               <!-- <%= item %> -->
+              <!-- <%= item.id %>  -->
               <!-- Modal -->
               <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                 aria-hidden="true">
@@ -214,7 +103,6 @@ background: rgba(28, 134, 138, 0.1);
                     <div class="modal-header">
                       <h5 class="modal-title" id="exampleModalLabel">
                         <%= item.name %>
-
                       </h5>
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
@@ -236,7 +124,7 @@ background: rgba(28, 134, 138, 0.1);
                 </button>
                 <% }) %>
               </td>
-            </tr>
+              
           </tbody>
         </table>
       </div>
@@ -250,7 +138,7 @@ background: rgba(28, 134, 138, 0.1);
             </li>
             <% } else { %>
               <li>
-                <a class="page-link" href="/product/list/<%=Number(current)-1%>">Previous</a>
+                <a class="page-link" href="/product/list?page=<%=Number(current)-1%>">Previous</a>
               </li>
               <% } %>
                 <% var i=(Number(current)> 5 ? Number(current) - 4 : 1) %> <% if (i !==1) { %>
@@ -262,7 +150,7 @@ background: rgba(28, 134, 138, 0.1);
                               <%= i %>
                             </a></li>
                           <% } else { %>
-                            <li><a class="page-link" href="/product/list/<%= i %>">
+                            <li><a class="page-link" href="/product/list?page=<%= i %>">
                                 <%= i %>
                               </a></li>
                             <% } %>
@@ -276,54 +164,21 @@ background: rgba(28, 134, 138, 0.1);
                                       <li class="page-item disabled"><a class="page-link">Next</a></li>
                                       <% } else { %>
                                         <li class="page-item">
-                                          <a class="page-link" href="/product/list/<%= Number(current)+1 %>">Next</a>
+                                          <a class="page-link" href="/product/list?page=<%= Number(current)+1 %>">Next</a>
                                         </li>
                                         <% } %>
         </ul>
         <% } %>
       </div>
-        <script>
-          function sortData(ele){
-            alert($(ele).attr('value'));
-          }
-          function sortTableByColumn(table, column, asc = true) {
-            const dirModifier = asc ? 1 : -1;
-            const tBody = table.tBodies[0];
-            const rows = Array.from(tBody.querySelectorAll("tr"));
-        
-            // Sort each row
-            const sortedRows = rows.sort((a, b) => {
-                const aColText = a.querySelector(`td:nth-child(${ column + 1 })`).textContent.trim();
-                const bColText = b.querySelector(`td:nth-child(${ column + 1 })`).textContent.trim();
-        
-                return aColText > bColText ? (1 * dirModifier) : (-1 * dirModifier);
-            });
-        
-            // Remove all existing TRs from the table
-            while (tBody.firstChild) {
-                tBody.removeChild(tBody.firstChild);
+     <script>
+         function changeStatus(id, data) {
+            let text = "Are you sure you want to change status ?";
+            const params = new URLSearchParams(window.location.search)
+            // alert(data)
+            if (confirm(text) == true) {
+              window.location = `http://localhost:3000${window.location.pathname}/status/${id}/${data}?${params}`;
             }
-        
-            // Re-add the newly sorted rows
-            tBody.append(...sortedRows);
-        
-            // Remember how the column is currently sorted
-            table.querySelectorAll("th").forEach(th => th.classList.remove("th-sort-asc", "th-sort-desc"));
-            table.querySelector(`th:nth-child(${ column + 1})`).classList.toggle("th-sort-asc", asc);
-            table.querySelector(`th:nth-child(${ column + 1})`).classList.toggle("th-sort-desc", !asc);
-        }
-        
-        document.querySelectorAll(".table-sortable th").forEach(headerCell => {
-            headerCell.addEventListener("click", () => {
-                const tableElement = headerCell.parentElement.parentElement.parentElement;
-                const headerIndex = Array.prototype.indexOf.call(headerCell.parentElement.children, headerCell);
-                const currentIsAscending = headerCell.classList.contains("th-sort-asc");
-        
-                sortTableByColumn(tableElement, headerIndex, !currentIsAscending);
-            });
-        });
-        
-            
-        </script>
+          }
+     </script>
 
           <%- include('assets/footer') %>
