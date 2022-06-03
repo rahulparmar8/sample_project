@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express";
 import productModel from "../models/produtModels.js";
 import { sorting } from "../helper/sorts";
-import { deleteFileExt } from "../helper/deleteFile";
+import { deleteFileExt } from "../helper/deleteFile.js";
 import { validationResult } from "express-validator";
 import multer from "multer";
 import mongoose from "mongoose";
@@ -67,7 +67,7 @@ export default class Product {
       // let searchKeyword = req.query.search;
       const searchKeyword = req.query.search as string;
       // let mysort = { name: 1 }
-
+      // console.log(page, "  ", perPage, " ", perPage * Number(page) - perPage)
       let searchObj = {};
 
       if (searchKeyword) {
@@ -77,8 +77,6 @@ export default class Product {
           }
           : { name: new RegExp(`${searchKeyword.toString().trim()}`, "i") };
       }
-
-
       // console.log("searc=>>>>>",searchKeyword);
 
       const result = await productModel
@@ -122,19 +120,23 @@ export default class Product {
   editProductData = async (req: Request, res: Response) => {
     try {
       // const id = req.params.id;
-      // const body = req.body;
-      // if (req.file) {
-      //   body.image = req.file.filename;
-      //   deleteFileExt(req.body.productImage);
-      // }
       const body = req.body;
+      const data = await productModel.findById(req.body.id)
+      // console.log(data ,body);
+      // console.log(body.image);
+      // console.log(body.productImage);
+      // console.log(req.file?.filename);
+
       if (req.file) {
         body.image = req.file.filename;
+        deleteFileExt(data.image);
       }
 
       const result = await productModel.findByIdAndUpdate(req.params.id, req.body, body);
       // console.log("img", req.file);
       // console.log("reshult=>>>", result);
+      console.log(data);
+
 
       return res.redirect("/product/list");
     } catch (error) {
@@ -197,9 +199,9 @@ export default class Product {
   //  Delete Product Data     //
   deleteProduct = async (req: Request, res: Response) => {
     try {
-      const result = await productModel.findByIdAndDelete(req.params.id);
-      // console.log(req.params.id);
-
+      const data = await productModel.findById(req.params.id)
+      deleteFileExt(data.image);
+      await productModel.findByIdAndDelete(req.params.id);
       return res.redirect("/product/list");
     } catch (error) {
       console.log(error);

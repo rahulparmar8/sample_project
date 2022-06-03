@@ -1,16 +1,18 @@
 -Product CRUD (with mongo)
 -Add/edit Product(proper validation,Take image as input)
-    -List Product  
-    -Search by name,price & discount 
-    -Sort by name,price(asc,desc)
-    -Pagination (server side)
-    -Delete Product(confirmation on delete)
-    -View Product 
+-List Product  
+-Search by name,price & discount 
+-Sort by name,price(asc,desc)
+-Pagination (server side)
+-Delete Product(confirmation on delete)
+-View Product 
 -Enable/Disble product  
 
 
-Product img shud be png and jpg
-    page shud be readirec to list page after change status
-delete privesh img after add new img in edit product
-last inserted product come first in list
-    pagination not working after applying sorting
+    last inserted product come first in list :not done
+    Product img shud be png and jpg
+    page shud be readirec to list page after change status 
+    delete privesh img after add new img in edit product 
+    pagination not working after applying sorting :not done
+
+   

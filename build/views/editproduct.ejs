@@ -1,82 +1,50 @@
-<%- include('assets/navbar') %> <%- include('assets/header') %>
+<%- include('assets/navbar') %>
+  <%- include('assets/header') %>
 
-<div class="row" style="justify-content: center">
-  <div class="col-sm-6 mt-5">
-    <h2 class="alert alert-secondary text-center">Edit Product</h2>
-    <form method="POST" enctype="multipart/form-data">
-      <div class="mb-3">
-        <label for="name" class="form-label">Name</label>
-        <input
-          value="<%= data.name %>"
-          id="name"
-          name="name"
-          type="text"
-          class="form-control"
-          autocomplete="off"
-        />
+    <div class="row" style="justify-content: center">
+      <div class="col-sm-6 mt-5">
+        <h2 class="alert alert-secondary text-center">Edit Product</h2>
+        <form method="POST" enctype="multipart/form-data">
+          <div class="mb-3">
+            <input hidden value="<%= data._id %>" id="id" name="id" type="text" class="form-control"
+              autocomplete="off" />
+            <label for="name" class="form-label">Name</label>
+            <input value="<%= data.name %>" id="name" name="name" type="text" class="form-control" autocomplete="off" />
+          </div>
+
+          <div class="mb-3">
+            <label for="desc" class="form-label">desc</label>
+            <textarea class="form-control" id="desc" name="desc" type="text" class="form-control" autocomplete="off"
+              rows="3"><%= data.desc %></textarea>
+          </div>
+
+          <div class="mb-3">
+            <label for="price" class="form-label">Price</label>
+            <input value="<%= data.price %>" id="price" name="price" type="text" class="form-control"
+              autocomplete="off" />
+          </div>
+
+          <div class="mb-3">
+            <label for="discount" class="form-label">Discount</label>
+            <input value="<%= data.discount %>" id="discount" name="discount" type="discount" class="form-control"
+              autocomplete="off" />
+          </div>
+
+          <div class="form-group col-6">
+            <label for="productFile"> Image </label><span class="important"></span>
+            <td>
+              <img src="/uploads/<%= data.image %>" height="100px" width="100px"
+                alt="Sorry! Image not available at this time" />
+            </td>
+            <input type="file" class="form-control" id="image" name="image" />
+          </div>
+
+          <br />
+          <button type="submit" class="btn btn-outline-info">Update</button> &nbsp;
+          <button type="submit" class="btn btn-outline-light">Cancel</button> &nbsp;
+          <a href="/product/list/1" class="btn btn-outline-secondary">Back to Home</a>
+        </form>
       </div>
-
-      <div class="mb-3">
-        <label for="desc" class="form-label">desc</label>
-        <textarea 
-            class="form-control"
-            id="desc"
-            name="desc" 
-            type="text" 
-            class="form-control" 
-            autocomplete="off" 
-            rows="3"><%= data.desc %></textarea>
     </div>
-   
-      <div class="mb-3">
-        <label for="price" class="form-label">Price</label>
-        <input
-          value="<%= data.price %>"
-          id="price"
-          name="price"
-          type="text"
-          class="form-control"
-          autocomplete="off"
-        />
-      </div>
 
-      <div class="mb-3">
-        <label for="discount" class="form-label">Discount</label>
-        <input
-          value="<%= data.discount %>"
-          id="discount"
-          name="discount"
-          type="discount"
-          class="form-control"
-          autocomplete="off"
-        />
-      </div>
-      
-      <!-- <div class="form-group col-6">
-        <label for="productFile"> Image</label>
-        <img src="/uploads/<%= data.image %>"
-          onerror="this.onerror=null; this.src='/uploads/defaulf_user.png'" class="rounded-circle"
-          alt="Sorry! Image not available at this time" height="100px" width="100px"
-          data-holder-rendered="true" />
-        <input type="file" class="form-control" id="image" name="image" />
-        <input hidden type="text" name="image" value="<%= data.image %>" />
-      </div> -->
-
-
-      <div class="form-group col-6">
-        <label for="productFile"> Image </label><span class="important"></span>
-        <td>
-          <img src="/uploads/<%= data.image %>" height="100px" width="100px"  alt="Sorry! Image not available at this time" />
-        </td>
-        <input value="<%= data.image %>" type="file" class="form-control" id="image" name="image" />
-      </div>
-
-<br />
-      <button type="submit" class="btn btn-outline-info">Update</button> &nbsp;
-      <button type="submit" class="btn btn-outline-light">Cancel</button> &nbsp;
-      <a href="/product/list/1" class="btn btn-outline-secondary">Back to Home</a>
-    </form>
-  </div>
-</div>
-
-<%- include('assets/footer') %>
+    <%- include('assets/footer') %>

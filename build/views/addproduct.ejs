@@ -4,7 +4,7 @@
         <div class="row" style="justify-content: center">
             <div class="col-sm-6 mt-5">
                 <h2 class="alert alert-info text-center">Add Product</h2>
-                <form method="POST" enctype="multipart/form-data">
+                <form method="POST" enctype="multipart/form-data" id="productform">
                     <div class="mb-3">
                         <label for="name" class="form-label">Name</label>
                         <input   id="name" name="name" type="text" class="form-control" autocomplete="off" />
@@ -50,14 +50,35 @@
 
                     <div class="form-group col-6">
                         <label for="productFile">Image</label><span class="important"></span>
+                        <!-- <span class="error" id="unique-id-here">This field is required</span> -->
                         <input  type="file" class="form-control" id="image" name="image" />
                     </div>
-                  
-
                         <br />
                     <button type="submit" class="btn btn-outline-primary">Submit</button>
                 </form>
             </div>
         </div>
 
-        <%- include('assets/footer') %>
+<script>
+   $(document).ready(function () {
+$("#productform").validate({
+  rules: {
+      image: {
+      required: true,
+      extension: "jpg|jpeg|png"
+    },
+  },
+  message: {
+    image: {
+      required: "Please upload file.",
+      extension: "Please upload file in these format only (jpg, jpeg, png)."
+    },
+  },
+});
+});
+
+</script>
+
+      
+
+     <%- include('assets/footer'); %>

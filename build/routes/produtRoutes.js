@@ -33,6 +33,6 @@ router.get("/list/", product.listProduct);
 router.get("/edit/:id", product.editProductPage);
 router.post("/edit/:id", uploadImage_1.upload.single("image"), product.editProductData);
 router.get("/view/:id", product.viewProductPage);
-router.get("/list/status/:id/:data", product.statusChange);
-router.get("/delete/:id", product.deleteProduct);
+router.get("/list/status/:id/:data/", product.statusChange);
+router.get("/delete/:id/", uploadImage_1.upload.single("image"), product.deleteProduct);
 exports.default = router;

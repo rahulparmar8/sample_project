@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const produtModels_js_1 = __importDefault(require("../models/produtModels.js"));
 const sorts_1 = require("../helper/sorts");
+const deleteFile_js_1 = require("../helper/deleteFile.js");
 const express_validator_1 = require("express-validator");
 const mongoose_1 = __importDefault(require("mongoose"));
 class Product {
@@ -77,6 +78,7 @@ class Product {
                 // let searchKeyword = req.query.search;
                 const searchKeyword = req.query.search;
                 // let mysort = { name: 1 }
+                // console.log(page, "  ", perPage, " ", perPage * Number(page) - perPage)
                 let searchObj = {};
                 if (searchKeyword) {
                     searchObj = /^(?:\d*\.\d{1,2}|\d+)$/.test(searchKeyword)
@@ -126,18 +128,20 @@ class Product {
         this.editProductData = (req, res) => __awaiter(this, void 0, void 0, function* () {
             try {
                 // const id = req.params.id;
-                // const body = req.body;
-                // if (req.file) {
-                //   body.image = req.file.filename;
-                //   deleteFileExt(req.body.productImage);
-                // }
                 const body = req.body;
+                const data = yield produtModels_js_1.default.findById(req.body.id);
+                // console.log(data ,body);
+                // console.log(body.image);
+                // console.log(body.productImage);
+                // console.log(req.file?.filename);
                 if (req.file) {
                     body.image = req.file.filename;
+                    (0, deleteFile_js_1.deleteFileExt)(data.image);
                 }
                 const result = yield produtModels_js_1.default.findByIdAndUpdate(req.params.id, req.body, body);
                 // console.log("img", req.file);
                 // console.log("reshult=>>>", result);
+                console.log(data);
                 return res.redirect("/product/list");
             }
             catch (error) {
@@ -188,8 +192,9 @@ class Product {
         //  Delete Product Data     //
         this.deleteProduct = (req, res) => __awaiter(this, void 0, void 0, function* () {
             try {
-                const result = yield produtModels_js_1.default.findByIdAndDelete(req.params.id);
-                // console.log(req.params.id);
+                const data = yield produtModels_js_1.default.findById(req.params.id);
+                (0, deleteFile_js_1.deleteFileExt)(data.image);
+                yield produtModels_js_1.default.findByIdAndDelete(req.params.id);
                 return res.redirect("/product/list");
             }
             catch (error) {

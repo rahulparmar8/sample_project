@@ -10,7 +10,7 @@ const router = express.Router();
 
 router.get("/add/", product.productAddPage);
 router.post("/add/",
-upload.single("image"),
+  upload.single("image"),
   check("name", "Name is required. Please enter your Name. ").not().isEmpty(),
   check("desc", "Desc is required. Please enter your Description. ")
     .not()
@@ -36,7 +36,7 @@ router.get("/list/", product.listProduct);
 router.get("/edit/:id", product.editProductPage);
 router.post("/edit/:id", upload.single("image"), product.editProductData);
 router.get("/view/:id", product.viewProductPage);
-router.get("/list/status/:id/:data",  product.statusChange);
-router.get("/delete/:id", product.deleteProduct);
+router.get("/list/status/:id/:data/", product.statusChange);
+router.get("/delete/:id/", upload.single("image"), product.deleteProduct);
 
 export default router;
