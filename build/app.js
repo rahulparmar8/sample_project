@@ -7,19 +7,22 @@ const express_1 = __importDefault(require("express"));
 const path_1 = __importDefault(require("path"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const produtRoutes_1 = __importDefault(require("./routes/produtRoutes"));
+const catgroryRoutes_1 = __importDefault(require("./routes/catgroryRoutes"));
 const body_parser_1 = __importDefault(require("body-parser"));
-const express_session_1 = __importDefault(require("express-session"));
+// import session from "express-session";
 const app = (0, express_1.default)();
 const port = 3000;
 const DATABASE_URL = "mongodb://localhost:27017/node_practice";
-const multer = require('multer');
-const upload = multer({ dest: "../uploads" });
+// const multer = require('multer')
+// const upload = multer({ dest: "../uploads" });
 // Session //
-app.use((0, express_session_1.default)({
-    secret: "imkey",
-    resave: false,
-    saveUninitialized: true,
-}));
+// app.use(
+//   session({
+//       secret: "imkey",
+//       resave: false,
+//       saveUninitialized: true,
+//   })
+// );
 app.use(express_1.default.static("build"));
 app.use(express_1.default.static("uploads"));
 app.use(express_1.default.static(path_1.default.join(__dirname, "build/uploads")));
@@ -30,12 +33,11 @@ app.use(express_1.default.static("views"));
 app.use(express_1.default.static(path_1.default.join(__dirname, "assets")));
 app.set("views", path_1.default.join(__dirname, "views"));
 app.set("view engine", "ejs");
-// console.log(__dirname);
 app.use(express_1.default.json());
 app.use(body_parser_1.default.json());
-// body parts middleware //
 app.use(body_parser_1.default.urlencoded({ extended: true }));
 app.use("/product", produtRoutes_1.default);
+app.use("/category", catgroryRoutes_1.default);
 // Database connection //
 mongoose_1.default.connect(`mongodb://localhost:27017/node_practice`).then(() => {
     console.log("connected Database");

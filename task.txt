@@ -9,10 +9,11 @@
 -Enable/Disble product  
 
 
-    last inserted product come first in list :not done
+    last inserted product come first in list 
     Product img shud be png and jpg
     page shud be readirec to list page after change status 
     delete privesh img after add new img in edit product 
-    pagination not working after applying sorting :not done
+    pagination not working after applying sorting 
 
-   
+ -CRUD for Catgrory(name,desc,image) same as product
+ -Child_parent feature  

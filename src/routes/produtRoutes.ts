@@ -2,6 +2,7 @@ import express, { Router } from "express";
 import Product from "../controllers/produtController";
 import { check } from "express-validator";
 import { upload } from "../helper/uploadImage";
+
 const multer = require('multer')
 const product = new Product();
 const router = express.Router();

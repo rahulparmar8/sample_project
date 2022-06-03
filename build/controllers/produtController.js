@@ -88,6 +88,7 @@ class Product {
                         : { name: new RegExp(`${searchKeyword.toString().trim()}`, "i") };
                 }
                 // console.log("searc=>>>>>",searchKeyword);
+                // console.log(recievedData.sortMethod);
                 const result = yield produtModels_js_1.default
                     .find(searchObj)
                     .sort(recievedData.sortMethod)
@@ -141,7 +142,7 @@ class Product {
                 const result = yield produtModels_js_1.default.findByIdAndUpdate(req.params.id, req.body, body);
                 // console.log("img", req.file);
                 // console.log("reshult=>>>", result);
-                console.log(data);
+                // console.log(data);
                 return res.redirect("/product/list");
             }
             catch (error) {
@@ -152,15 +153,18 @@ class Product {
         this.viewProductPage = (req, res) => __awaiter(this, void 0, void 0, function* () {
             try {
                 const id = req.params.id;
-                const viewData = yield produtModels_js_1.default.aggregate([
-                    {
-                        $match: { _id: new mongoose_1.default.Types.ObjectId(`${id}`) },
-                    },
-                ]);
+                // const viewData: any = await productModel.aggregate([
+                //   {
+                //     $match: { _id: new mongoose.Types.ObjectId(`${id}`) },
+                //   },
+                // ]);
+                const viewData = yield produtModels_js_1.default.findOne({
+                    _id: new mongoose_1.default.Types.ObjectId(`${id}`)
+                });
                 // console.log(viewData);
-                const product = viewData[0];
+                // const product = viewData[0];
                 return res.render("viewproduct", {
-                    data: product,
+                    data: viewData,
                 });
             }
             catch (error) {

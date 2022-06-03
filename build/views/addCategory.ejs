@@ -1,0 +1,50 @@
+<%- include('assets/navbar') %>
+    <%- include('assets/header') %>
+
+    <div class="row" style="justify-content: center">
+        <div class="col-sm-6 mt-5">
+            <h2 class="alert alert-info text-center">Add Category</h2>
+            <a href="/category/list" class="btn btn-primary">List Catgrory </a>&nbsp; &nbsp;
+            <form method="POST" enctype="multipart/form-data" id="productform">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Name</label>
+                    <input   id="name" name="name" type="text" class="form-control" autocomplete="off" />
+                </div>
+                <!-- <% if(typeof alert !='undefined' ) { %> <% alert.forEach(function(error) {
+                    %> <% if(error.param=='name' ){%>
+                    <div style="color: red"><%= error.msg %></div>
+                    <%} })} %>
+         -->
+                <div class="mb-3">
+                    <label for="desc" class="form-label">Description </label>
+                    <textarea 
+                        class="form-control"
+                        id="desc"
+                        name="desc" 
+                        type="text" 
+                        class="form-control" 
+                        autocomplete="off" 
+                        rows="3"></textarea>
+                </div>
+
+
+                <!-- <% if(typeof alert !='undefined' ) { %> <% alert.forEach(function(error) {
+                    %> <% if(error.param=='desc' ){%>
+                    <div style="color: red"><%= error.msg %></div>
+                    <%} })} %> -->
+               
+                <div class="form-group col-6">
+                    <label for="productFile">Image</label><span class="important"></span>
+                    <!-- <span class="error" id="unique-id-here">This field is required</span> -->
+                    <input  type="file" class="form-control" id="image" name="image" />
+                </div>
+                    <br />
+                <button type="submit" class="btn btn-outline-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+
+
+
+
+     <%- include('assets/footer'); %>

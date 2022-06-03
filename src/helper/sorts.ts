@@ -2,7 +2,7 @@ const sorting = (query: any) => {
   const sortType = Number(query.sorttype);
   const sortby = query.sortby as string;
 
-// console.log(sortby , sortType);
+// console.log("shortby", sortby ,"shorttype", sortType);
 
   let sortMethod: any = { createdAt: -1 };
   if (!isNaN(sortType) && sortby !== undefined) {
@@ -12,7 +12,7 @@ const sorting = (query: any) => {
     sortMethod[sortby] = sortType;
   }
 
-// console.log(sortMethod);
+// console.log("short ", sortMethod);
 
 
   return {

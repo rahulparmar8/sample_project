@@ -1,0 +1,37 @@
+<%- include('assets/navbar') %>
+  <%- include('assets/header') %>
+
+  <%- include('assets/navbar') %> <%- include('assets/header') %>
+
+  <div class="row" style="justify-content: center">
+    <div class="col-sm-6 mt-5">
+      <h2 class="alert alert-secondary text-center">View Category</h2>
+      <form method="POST">
+        
+        <div class="mb-3">
+          <label for="name" class="form-label">Name :-</label>
+          <label for="name" class="form-label"><%= data.name %></label>
+        </div>
+  
+        <div class="mb-3">
+          <label for="desc" class="form-label">Description :-</label>
+          <label for="desc" class="form-label"><%= data.desc %></label>
+        </div>
+  
+        <div class="mb-3">
+          <label for="image" class="form-label">Image :-</label>
+          <td>
+            <img src="/uploads/<%= data.image %>" height="100px" width="100px" />
+          </td>
+          <!-- <label for="image" class="form-label"><%= data.image %></label> -->
+        </div>
+       
+      </form>
+    </div>
+  </div>
+  
+  <%- include('assets/footer') %>
+  
+
+
+  <%- include('assets/footer') %>

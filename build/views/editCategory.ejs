@@ -1,0 +1,38 @@
+<%- include('assets/navbar') %>
+  <%- include('assets/header') %>
+
+  <div class="row" style="justify-content: center">
+    <div class="col-sm-6 mt-5">
+      <h2 class="alert alert-secondary text-center">Edit Product</h2>
+      <form method="POST" enctype="multipart/form-data">
+        <div class="mb-3">
+          <input hidden value=" " id="id" name="id" type="text" class="form-control"
+            autocomplete="off" />
+          <label for="name" class="form-label">Name</label>
+          <input value="<%= data.name %>" id="name" name="name" type="text" class="form-control" autocomplete="off" />
+        </div>
+
+        <div class="mb-3">
+          <label for="desc" class="form-label">desc</label>
+          <textarea class="form-control" id="desc" name="desc" type="text" class="form-control" autocomplete="off"
+            rows="3"> <%= data.desc %>   </textarea>
+        </div>
+
+        <div class="form-group col-6">
+          <label for="productFile"> Image </label><span class="important"></span>
+          <td>
+            <img src="/uploads/<%= data.image %>" height="100px" width="100px"
+              alt="Sorry! Image not available at this time" />
+          </td>
+          <input type="file" class="form-control" id="image" name="image" />
+        </div>
+
+        <br />
+        <button type="submit" class="btn btn-outline-info">Update</button> &nbsp;
+        <button type="submit" class="btn btn-outline-light">Cancel</button> &nbsp;
+        <a href="/category/list/" class="btn btn-outline-secondary">Back to Home</a>
+      </form>
+    </div>
+  </div>
+
+  <%- include('assets/footer') %>

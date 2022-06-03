@@ -3,7 +3,6 @@ import productModel from "../models/produtModels.js";
 import { sorting } from "../helper/sorts";
 import { deleteFileExt } from "../helper/deleteFile.js";
 import { validationResult } from "express-validator";
-import multer from "multer";
 import mongoose from "mongoose";
 
 export default class Product {
@@ -78,6 +77,7 @@ export default class Product {
           : { name: new RegExp(`${searchKeyword.toString().trim()}`, "i") };
       }
       // console.log("searc=>>>>>",searchKeyword);
+// console.log(recievedData.sortMethod);
 
       const result = await productModel
         .find(searchObj)
@@ -135,8 +135,7 @@ export default class Product {
       const result = await productModel.findByIdAndUpdate(req.params.id, req.body, body);
       // console.log("img", req.file);
       // console.log("reshult=>>>", result);
-      console.log(data);
-
+      // console.log(data);
 
       return res.redirect("/product/list");
     } catch (error) {
@@ -148,17 +147,23 @@ export default class Product {
   viewProductPage = async (req: Request, res: Response) => {
     try {
       const id = req.params.id;
-      const viewData: any = await productModel.aggregate([
-        {
-          $match: { _id: new mongoose.Types.ObjectId(`${id}`) },
-        },
-      ]);
+      // const viewData: any = await productModel.aggregate([
+      //   {
+      //     $match: { _id: new mongoose.Types.ObjectId(`${id}`) },
+      //   },
+      // ]);
+
+      const viewData = await productModel.findOne({ 
+        _id :  new mongoose.Types.ObjectId(`${id}`)
+      })
+
+
       // console.log(viewData);
 
-      const product = viewData[0];
+      // const product = viewData[0];
 
       return res.render("viewproduct", {
-        data: product,
+        data: viewData,
       });
     } catch (error) {
       console.log(error);

@@ -1,0 +1,89 @@
+<%- include('assets/navbar') %>
+    <%- include('assets/header') %>
+
+    <div class="row" style="justify-content: center">
+
+        <div class="col-sm-6 mt-5">
+          <h2 class="alert alert-secondary text-center">Product List</h2>
+  
+          <form class="d-flex" enctype="multipart/form-data">
+        
+            <!-- <button class="btn btn-outline-dark" type="submit">Search</button> &nbsp; &nbsp; -->
+            <a href="" class="btn btn-primary">Reset </a>&nbsp; &nbsp;
+            <a href="/category/add/" class="btn btn-primary">Add </a>
+          </form>
+  
+  
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name
+                 
+               
+                <th scope="col">Description</th>
+                <th scope="col">Image</th>
+                <th scope="col">View</th>
+                <th scope="col">Edit</th>
+                <th scope="col">Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <% data.forEach((item,i)=>{ %>
+              </tr>
+             
+              <tr>
+                <td>
+                    <%= (i+1) %>
+                
+                </td>
+                <td>
+                    <%= item.name %>
+                
+                </td>
+                <td>
+                  <%= item.desc %>
+                
+                </td>
+                <td>
+                  <img src="/uploads/<%= item.image %>" height="100px" width="100px" alt="image" />
+                </td>
+
+                <td>
+                  <a href="/category/view/<%= item.id %>">
+                    <button type="button" class="btn btn-dark btn-sm">
+                      view
+                    </button>
+                  </a>
+                </td>
+  <!-- <%= item.id %> -->
+                <td>
+                  <a href="/category/edit/<%= item.id %>">
+                    <button type="button" class="btn btn-info btn-sm">
+                      Edit
+                    </button>
+                  </a>
+                </td>
+  
+                <td>
+                  <a href="/category/delete/<%= item.id %>"
+                    onclick="return confirm('Are you sure to delete this record ?');">
+                    <button class="btn btn-danger" aria-hidden="true">  Delete </button> 
+                     </a>
+                     <% }) %>
+                   
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+
+
+
+
+
+
+
+
+    <%- include('assets/footer'); %>  

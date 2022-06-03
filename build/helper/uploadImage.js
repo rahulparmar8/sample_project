@@ -7,18 +7,19 @@ exports.upload = void 0;
 const multer_1 = __importDefault(require("multer"));
 const storage = multer_1.default.diskStorage({
     destination: function (req, file, cb) {
-        // console.log("in function");
+        console.log("in function");
         cb(null, './build/uploads');
     },
     filename: function (req, file, cb) {
-        // console.log("file");
+        console.log("file");
         cb(null, Date.now() + "_" + file.originalname);
     },
 });
 const fileFilter = (req, file, cb) => {
     if (file.mimetype === "image/jpg" ||
         file.mimetype === "image/jpeg" ||
-        file.mimetype === "image/png") {
+        file.mimetype === "image/png" ||
+        file.mimetype === "image/gif") {
         cb(null, true);
     }
     else {
