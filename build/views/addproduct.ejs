@@ -4,6 +4,7 @@
         <div class="row" style="justify-content: center">
             <div class="col-sm-6 mt-5">
                 <h2 class="alert alert-info text-center">Add Product</h2>
+                <a href="/product/list" class="btn btn-primary">List Product </a>&nbsp; &nbsp;
                 <form method="POST" enctype="multipart/form-data" id="productform">
                     <div class="mb-3">
                         <label for="name" class="form-label">Name</label>
@@ -53,6 +54,32 @@
                         <!-- <span class="error" id="unique-id-here">This field is required</span> -->
                         <input  type="file" class="form-control" id="image" name="image" />
                     </div>
+    <br>
+
+    <div class="form-group col-6">
+        <label for="category">Category</label><span class="important">*</span>
+        <select class="form-control" name="category" id="category" multiple>
+          <% if(typeof catlist !='undefined' ) { %>
+            <% catlist.forEach(function(element) { %>
+              <% if (element.parent_id===null) { %>
+                <option value=<%=element._id %> >* <%= element.name %> %>
+                </option>
+                <% catlist.forEach(function(data) { %>
+                  <% if (element._id.toString()==data?.parent_id ) { %>
+                    <option value=<%=data._id %> >>>>>>><%= data.name %> %>
+                    </option>
+                    <% catlist.forEach(function(subData) { %>
+                      <% if(data?._id.toString() ==subData.parent_id ){ %>
+                        <option value=<%=subData._id %> >>>>>>>>>>>>>> <%= subData.name %> %>
+                        </option>
+                        <% } } )%>
+                          <%}})} %>
+                            <%})} %>
+        </select>
+
+      </div>
+                      
+                        <br />
                         <br />
                     <button type="submit" class="btn btn-outline-primary">Submit</button>
                 </form>

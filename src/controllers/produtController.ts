@@ -4,15 +4,23 @@ import { sorting } from "../helper/sorts";
 import { deleteFileExt } from "../helper/deleteFile.js";
 import { validationResult } from "express-validator";
 import mongoose from "mongoose";
+import categoryModel from "../models/categoryModels.js";
+import { categoryListData } from "../helper/categoryLookup";
 
 export default class Product {
   //  Product Page    //
   productAddPage = async (req: Request, res: Response) => {
     try {
+      const categorylist = await categoryModel.find({});
       // const tabel = await productModel.findById({ _id: req.params.id });
       // console.log(tabel);
       // return res.status(200).json(tabel)
-      return res.render("addproduct");
+      // console.log(categorylist);
+
+      return res.render("addproduct", {
+        catlist: categorylist,
+
+      });
     } catch (error) {
       console.log(error);
     }
@@ -21,9 +29,7 @@ export default class Product {
   //  Add Product //
   productAddData = async (req: Request, res: Response) => {
     try {
-      // console.log('file===>',JSON.stringify(req.file))
       const errors = validationResult(req);
-      // console.log('errors====', errors)
       if (!errors.isEmpty()) {
         const result = await productModel.find();
         return res.render("addproduct", {
@@ -77,7 +83,7 @@ export default class Product {
           : { name: new RegExp(`${searchKeyword.toString().trim()}`, "i") };
       }
       // console.log("searc=>>>>>",searchKeyword);
-// console.log(recievedData.sortMethod);
+      // console.log(recievedData.sortMethod);
 
       const result = await productModel
         .find(searchObj)
@@ -151,19 +157,30 @@ export default class Product {
       //   {
       //     $match: { _id: new mongoose.Types.ObjectId(`${id}`) },
       //   },
+      //   {
+      //     $lookup: {
+      //       from: "categories",
+      //       localField: "category",
+      //       foreignField: "_id",
+      //       as: "categories",
+      //     },
+      //   },
       // ]);
+      // console.log("viewData==>", viewData);
 
-      const viewData = await productModel.findOne({ 
-        _id :  new mongoose.Types.ObjectId(`${id}`)
+      const catData = await categoryListData();
+      const viewData = await productModel.findOne({
+        _id: new mongoose.Types.ObjectId(`${id}`)
       })
+      console.log("catData==>>", catData[0].children);
 
-
-      // console.log(viewData);
+      console.log("viewData==>", viewData);
 
       // const product = viewData[0];
 
       return res.render("viewproduct", {
         data: viewData,
+        categoryData: catData,
       });
     } catch (error) {
       console.log(error);

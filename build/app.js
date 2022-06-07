@@ -7,7 +7,7 @@ const express_1 = __importDefault(require("express"));
 const path_1 = __importDefault(require("path"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const produtRoutes_1 = __importDefault(require("./routes/produtRoutes"));
-const catgroryRoutes_1 = __importDefault(require("./routes/catgroryRoutes"));
+const categoryRoutes_1 = __importDefault(require("./routes/categoryRoutes"));
 const body_parser_1 = __importDefault(require("body-parser"));
 // import session from "express-session";
 const app = (0, express_1.default)();
@@ -36,8 +36,11 @@ app.set("view engine", "ejs");
 app.use(express_1.default.json());
 app.use(body_parser_1.default.json());
 app.use(body_parser_1.default.urlencoded({ extended: true }));
+app.get("/home", (req, res) => {
+    res.render("home");
+});
 app.use("/product", produtRoutes_1.default);
-app.use("/category", catgroryRoutes_1.default);
+app.use("/category", categoryRoutes_1.default);
 // Database connection //
 mongoose_1.default.connect(`mongodb://localhost:27017/node_practice`).then(() => {
     console.log("connected Database");

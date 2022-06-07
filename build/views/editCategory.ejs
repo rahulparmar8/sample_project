@@ -6,8 +6,8 @@
       <h2 class="alert alert-secondary text-center">Edit Product</h2>
       <form method="POST" enctype="multipart/form-data">
         <div class="mb-3">
-          <input hidden value=" " id="id" name="id" type="text" class="form-control"
-            autocomplete="off" />
+          <input hidden value="<%= data._id %>" id="id" name="id" type="text" class="form-control"
+              autocomplete="off" />
           <label for="name" class="form-label">Name</label>
           <input value="<%= data.name %>" id="name" name="name" type="text" class="form-control" autocomplete="off" />
         </div>

@@ -10,11 +10,7 @@
                     <label for="name" class="form-label">Name</label>
                     <input   id="name" name="name" type="text" class="form-control" autocomplete="off" />
                 </div>
-                <!-- <% if(typeof alert !='undefined' ) { %> <% alert.forEach(function(error) {
-                    %> <% if(error.param=='name' ){%>
-                    <div style="color: red"><%= error.msg %></div>
-                    <%} })} %>
-         -->
+       
                 <div class="mb-3">
                     <label for="desc" class="form-label">Description </label>
                     <textarea 
@@ -26,25 +22,66 @@
                         autocomplete="off" 
                         rows="3"></textarea>
                 </div>
-
-
-                <!-- <% if(typeof alert !='undefined' ) { %> <% alert.forEach(function(error) {
-                    %> <% if(error.param=='desc' ){%>
-                    <div style="color: red"><%= error.msg %></div>
-                    <%} })} %> -->
                
                 <div class="form-group col-6">
                     <label for="productFile">Image</label><span class="important"></span>
-                    <!-- <span class="error" id="unique-id-here">This field is required</span> -->
                     <input  type="file" class="form-control" id="image" name="image" />
                 </div>
+
+                <div class="form-group col-6">
+                  <label for="categoryCheck">Category</label><span class="important">*</span>
+                  <select class="form-control" name="category" id="categoryCheck">
+                    <option value= "0" >Select Category</option>
+                    <% if(typeof categorylist != 'undefined') { %> 
+                      <% categorylist.forEach(function(data) { %>
+                      <option value=<%= data._id %>><%= data.name %> </option>
+                        <% })} %>
+                  </select>
+                </div>
+
                     <br />
                 <button type="submit" class="btn btn-outline-primary">Submit</button>
             </form>
         </div>
     </div>
 
-
+    <script>
+        $(document).ready(function () {
+     $("#productform").validate({
+       rules: {
+        name: {
+              required: true,
+              minlength: 2,
+              maxlength: 250,
+            },
+            desc: {
+              required: true,
+              minlength: 2,
+              maxlength: 500,
+            },
+           image: {
+           required: true,
+           extension: "jpg|jpeg|png|gif"
+         },
+       },
+       message: {
+        name: {
+              minlength: "Product Name must contain atleast 2 characters",
+              maxlength: "Product Name must not contain more than 250 characters",
+            },
+        desc: {
+              minlength: "Product Description must contain atleast 2 characters",
+              maxlength: "Product Description must not contain more than 500 characters",
+            },
+         image: {
+           required: "Please upload file.",
+           extension: "Please upload file in these format only (jpg, jpeg, png, gif)."
+         },
+       },
+     });
+     });
+     
+     </script>
 
 
      <%- include('assets/footer'); %>

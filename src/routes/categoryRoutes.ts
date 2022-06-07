@@ -1,13 +1,13 @@
 import { Router } from "express";
-import Category from "../controllers/catgroryController";
+import Category from "../controllers/categoryController";
 import { upload } from "../helper/uploadImage";
 
 
-const multer = require('multer')
+// const multer = require('multer')
 const category = new Category();
 const router = Router();
 
-router.get("/list", category.listCategory)
+router.get("/list/", category.listCategory)
 router.get("/add/", category.addCategoryPage);
 router.post("/add/", upload.single("image"), category.addCategoryData);
 router.get("/edit/:id", category.editCategoryPage);

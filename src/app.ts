@@ -2,7 +2,7 @@ import express from "express";
 import path from "path";
 import mongoose from "mongoose";
 import productRoutes from "./routes/produtRoutes";
-import categoryRoutes from "./routes/catgroryRoutes";
+import categoryRoutes from "./routes/categoryRoutes";
 import bodyParser from "body-parser";
 // import session from "express-session";
 
@@ -43,6 +43,10 @@ app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+
+app.get("/home", (req, res) => {
+  res.render("home");
+});
 app.use("/product", productRoutes);
 app.use("/category", categoryRoutes)
 

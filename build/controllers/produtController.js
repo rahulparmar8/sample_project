@@ -17,15 +17,21 @@ const sorts_1 = require("../helper/sorts");
 const deleteFile_js_1 = require("../helper/deleteFile.js");
 const express_validator_1 = require("express-validator");
 const mongoose_1 = __importDefault(require("mongoose"));
+const categoryModels_js_1 = __importDefault(require("../models/categoryModels.js"));
+const categoryLookup_1 = require("../helper/categoryLookup");
 class Product {
     constructor() {
         //  Product Page    //
         this.productAddPage = (req, res) => __awaiter(this, void 0, void 0, function* () {
             try {
+                const categorylist = yield categoryModels_js_1.default.find({});
                 // const tabel = await productModel.findById({ _id: req.params.id });
                 // console.log(tabel);
                 // return res.status(200).json(tabel)
-                return res.render("addproduct");
+                // console.log(categorylist);
+                return res.render("addproduct", {
+                    catlist: categorylist,
+                });
             }
             catch (error) {
                 console.log(error);
@@ -34,9 +40,7 @@ class Product {
         //  Add Product //
         this.productAddData = (req, res) => __awaiter(this, void 0, void 0, function* () {
             try {
-                // console.log('file===>',JSON.stringify(req.file))
                 const errors = (0, express_validator_1.validationResult)(req);
-                // console.log('errors====', errors)
                 if (!errors.isEmpty()) {
                     const result = yield produtModels_js_1.default.find();
                     return res.render("addproduct", {
@@ -157,14 +161,26 @@ class Product {
                 //   {
                 //     $match: { _id: new mongoose.Types.ObjectId(`${id}`) },
                 //   },
+                //   {
+                //     $lookup: {
+                //       from: "categories",
+                //       localField: "category",
+                //       foreignField: "_id",
+                //       as: "categories",
+                //     },
+                //   },
                 // ]);
+                // console.log("viewData==>", viewData);
+                const catData = yield (0, categoryLookup_1.categoryListData)();
                 const viewData = yield produtModels_js_1.default.findOne({
                     _id: new mongoose_1.default.Types.ObjectId(`${id}`)
                 });
-                // console.log(viewData);
+                console.log("catData==>>", catData[0].children);
+                console.log("viewData==>", viewData);
                 // const product = viewData[0];
                 return res.render("viewproduct", {
                     data: viewData,
+                    categoryData: catData,
                 });
             }
             catch (error) {

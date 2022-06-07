@@ -6,9 +6,11 @@
       <div class="col-sm-6 mt-5">
         <h2 class="alert alert-secondary text-center">Product List</h2>
         <form class="d-flex" enctype="multipart/form-data">
+
           <input placeholder="search by name, discount, price" value="<%= queryData && queryData.search %>"
             name="search" type="search" class="form-control me-2" placeholder="Search" aria-label="Search"
             aria-describedby="search-addon" autocomplete="off" />
+            
           <button class="btn btn-outline-dark" type="submit">Search</button> &nbsp; &nbsp;
           <a href="/product/list/" class="btn btn-primary">Reset </a>&nbsp; &nbsp;
           <a href="/product/add/" class="btn btn-primary">Add </a>
@@ -95,54 +97,13 @@
                   </button>
                 </a>
               </td>
-
-                 <!-- Modal -->
               <td>
-
-                <!-- <td>
-                  <button class="btn btn-danger" onclick="deleteRequest('<%= item.id %>')">
-                    <i class="fa fa-trash"></i>
-                  </button>
-                </td> -->
-              
-
-
                 <a href="/product/delete/<%= item.id %>"
                   onclick="return confirm('Are you sure to delete this record ?');">
                   <button class="btn btn-danger" aria-hidden="true">  Delete </button> 
                    </a>
 
-
-                <!-- <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                  Delete
-                </button> -->
-
-                <!-- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">
-                        <%= item.name %>
-                      </h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">Want to delete?</div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                        No
-                      </button>
-                      <a href="/product/delete/<%= item.id %>">
-                        <button type="button" class="btn btn-primary">Yes</button>
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div> -->
-
                 <% }) %>
-                  <!-- </td> -->
-
           </tbody>
         </table>
       </div>
@@ -191,18 +152,12 @@
         </div>
 
         <script>
-          function deleteRequest(id) {
-            let text = "Are you sure you want to delete product ?";
-            alert(window.location)
-            if (confirm(text) == true) {
-              window.location = `http://localhost:3003${window.location.pathname}/delete//${item.id}`;
-            }
-          }
+        
 
           function changeStatus(id, data) {
             let text = "Are you sure you want to change status ?";
             const params = new URLSearchParams(window.location.search)
-            alert("http://localhost:3000${window.location.pathname}/status/${id}/${data}?${params}")
+            // alert("http://localhost:3000${window.location.pathname}/status/${id}/${data}?${params}")
             if (confirm(text) == true) {
               window.location = `http://localhost:3000${window.location.pathname}/status/${id}/${data}?${params}`;
             }
