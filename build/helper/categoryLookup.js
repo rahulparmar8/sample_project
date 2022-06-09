@@ -28,7 +28,7 @@ const categoryListData = () => __awaiter(void 0, void 0, void 0, function* () {
             },
         },
     ]);
-    console.log("dataCat", catData);
+    // console.log("dataCat", catData);
     return catData;
 });
 exports.categoryListData = categoryListData;

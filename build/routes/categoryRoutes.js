@@ -15,5 +15,6 @@ router.post("/add/", uploadImage_1.upload.single("image"), category.addCategoryD
 router.get("/edit/:id", category.editCategoryPage);
 router.post("/edit/:id", uploadImage_1.upload.single("image"), category.editCategoryData);
 router.get("/view/:id", category.viewCategoryPage);
+router.get("/list/status/:id/:data/", category.statusCategory);
 router.get("/delete/:id/", category.deleteCategory);
 exports.default = router;

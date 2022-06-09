@@ -26,9 +26,11 @@
       </div>
       
       <div class="mb-3">
+        <% data.categories.map((data)=>{ %>
         <label for="category" class="form-label">Category :-</label>
-        <label for="category" class="form-label"><%= data.category %></label>
+        <label for="category" class="form-label"><%= data.name %></label>
       </div>
+      <% }) %>
 
       <div class="mb-3">
         <label for="image" class="form-label">Image :-</label>

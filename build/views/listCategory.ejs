@@ -1,6 +1,5 @@
-<%- include('assets/navbar') %>
-    <%- include('assets/header') %>
-
+<%- include('assets/navbar') %>  <%- include('assets/header') %>
+   
     <div class="row" style="justify-content: center">
 
         <div class="col-sm-6 mt-5">
@@ -33,7 +32,9 @@
                  
                
                 <th scope="col">Description</th>
+                <th scope="col">Catgory</th>
                 <th scope="col">Image</th>
+                <th scope="col">Status</th>
                 <th scope="col">View</th>
                 <th scope="col">Edit</th>
                 <th scope="col">Delete</th>
@@ -46,7 +47,7 @@
              
               <tr>
                 <td>
-                  <%= (i+1) + ((current-1)*2) %>
+                  <%= (i+1) + ((current-1)*5) %>
                 
                 </td>
                 <td>
@@ -55,7 +56,12 @@
                 </td>
                 <td>
                   <%= item.desc %>
-                
+        
+                </td>
+                <td>
+                  <% item.children && item.children.map((element)=>{ %>
+                    <%= element.name %> 
+                      <% }) %>
                 </td>
               
                 <td>
@@ -63,7 +69,14 @@
                 </td>
 
                 <td>
-                  <a href="/category/view/<%= item.id %>">
+                  <button onclick="changeStatus('<%= item._id %>' , '<%= item.status %>')"
+                    class="<%= item.status == 1 ? 'btn btn-success' : 'btn btn-danger' %>">
+                    <%= item.status==1 ? 'Active' : 'Inactive' %>
+                  </button>
+                  </td>
+
+                <td>
+                  <a href="/category/view/<%= item._id %>">
                     <button type="button" class="btn btn-dark btn-sm">
                       view
                     </button>
@@ -71,7 +84,7 @@
                 </td>
 
                 <td>
-                  <a href="/category/edit/<%= item.id %>">
+                  <a href="/category/edit/<%= item._id %>">
                     <button type="button" class="btn btn-info btn-sm">
                       Edit
                     </button>
@@ -79,12 +92,12 @@
                 </td>
   
                 <td>
-                  <a href="/category/delete/<%= item.id %>"
+                  <a href="/category/delete/<%= item._id %>"
                     onclick="return confirm('Are you sure to delete this record ?');">
                     <button class="btn btn-danger" aria-hidden="true">  Delete </button> 
                      </a>
                      <% }) %>
-                   
+         
             </tbody>
           </table>
         </div>
@@ -102,10 +115,10 @@
                   Previous</a>
               </li>
               <% } %>
-                <% var i=(Number(current)> 2 ? Number(current) - 1 : 1) %> <% if (i !==1) { %>
+                <% var i=(Number(current)> 5 ? Number(current) - 4 : 1) %> <% if (i !==1) { %>
                     <li class="page-item"><a class="page-link">...</a></li>
                     <% } %>
-                      <% for (; i <=(Number(current) + 1) && i <=pages; i++) { %>
+                      <% for (; i <=(Number(current) + 4) && i <=pages; i++) { %>
                         <% if (i==current) { %>
                           <li class="active"><a class="page-link">
                               <%= i %>
@@ -115,7 +128,7 @@
                                 <%= i %>
                               </a></li>
                             <% } %>
-                              <% if (i==Number(current) + 1 && i < pages) { %>
+                              <% if (i==Number(current) + 4 && i < pages) { %>
                                 <li class="page-item active" aria-current="page">
                                   <a class="page-link">...</a>
                                 </li>
@@ -133,7 +146,18 @@
           </div>     
 
 
-
+          <script>
+            function changeStatus(id, data) {
+              let text = "Are you sure you want to change status ?";
+              const params = new URLSearchParams(window.location.search)
+              // alert(window.location.pathname)
+              // alert("http://localhost:3000${window.location.pathname}/status/${id}/${data}?${params}")
+              if (confirm(text) == true) {
+                window.location = `http://localhost:3000${window.location.pathname}/status/${id}/${data}?${params}`;
+              }
+            }
+          </script>
+  
 
 
     <%- include('assets/footer'); %>  

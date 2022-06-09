@@ -15,5 +15,11 @@
     delete privesh img after add new img in edit product 
     pagination not working after applying sorting 
 
- -CRUD for Catgrory(name,desc,image) same as product
- -Child_parent feature  
+-CRUD for Catgrory(name,desc,image) same as product
+-Child_parent feature  
+
+    Prodcu active/inactive not working
+    add activ /inactive in category module
+    catgory should not come in product add/edit when it is inactive
+
+    category module completed

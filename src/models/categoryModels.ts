@@ -6,6 +6,7 @@ const categorySchema = new mongoose.Schema({
     image: { type: String },
     parent: { type: Number, enum: [0, 1], default: 0 },
     parent_id: { type: mongoose.Schema.Types.ObjectId, ref: "Category" },
+    status: { type: Number, enum: [0, 1], default: 1 },
 }, {
     timestamps: true
 });

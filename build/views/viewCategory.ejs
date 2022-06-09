@@ -1,7 +1,7 @@
 <%- include('assets/navbar') %>
   <%- include('assets/header') %>
 
-  <%- include('assets/navbar') %> <%- include('assets/header') %>
+
 
   <div class="row" style="justify-content: center">
     <div class="col-sm-6 mt-5">
@@ -18,6 +18,17 @@
           <label for="desc" class="form-label"><%= data.desc %></label>
         </div>
   
+      
+        <div class="mb-3">
+          <% data.categories.map((data)=>{ %>
+          <label for="category" class="form-label">Category :-</label>
+          <label for="category" class="form-label"> <%= data.name %></label>
+        </div>
+        <% }) %>
+    
+
+       
+
         <div class="mb-3">
           <label for="image" class="form-label">Image :-</label>
           <td>

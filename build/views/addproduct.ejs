@@ -56,9 +56,10 @@
                     </div>
     <br>
 
-    <div class="form-group col-6">
-        <label for="category">Category</label><span class="important">*</span>
-        <select class="form-control" name="category" id="category" multiple>
+      <div class="form-group col-6">
+        <label for="categoryCheck">Category</label><span class="important">*</span>
+        <select class="form-control" name="category" id="categoryCheck">
+          <option value= "0" >Select Category</option>
           <% if(typeof catlist !='undefined' ) { %>
             <% catlist.forEach(function(element) { %>
               <% if (element.parent_id===null) { %>
@@ -76,8 +77,8 @@
                           <%}})} %>
                             <%})} %>
         </select>
-
       </div>
+
                       
                         <br />
                         <br />
@@ -90,12 +91,41 @@
    $(document).ready(function () {
 $("#productform").validate({
   rules: {
-      image: {
+    name: {
+      required: true,
+      minlength: 2,
+      maxlength: 250,
+    },
+    desc: {
+      required: true,
+      minlength: 2,
+      maxlength: 500,
+    },
+    price: {
+      required: true,
+      checkPrice: true
+    },
+    discount: {
+      required: true,
+      checkPrice: true
+    },
+    image: {
       required: true,
       extension: "jpg|jpeg|png|gif"
     },
+    category : {
+      required: true,
+    },  
   },
   message: {
+    name: {
+      minlength: "Product Name must contain atleast 2 characters",
+      maxlength: "Product Name must not contain more than 250 characters",
+    },
+    desc: {
+      minlength: "Product Description must contain atleast 2 characters",
+      maxlength: "Product Description must not contain more than 500 characters",
+    },
     image: {
       required: "Please upload file.",
       extension: "Please upload file in these format only (jpg, jpeg, png)."

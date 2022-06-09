@@ -11,11 +11,18 @@ export default class Product {
   //  Product Page    //
   productAddPage = async (req: Request, res: Response) => {
     try {
-      const categorylist = await categoryModel.find({});
-      // const tabel = await productModel.findById({ _id: req.params.id });
-      // console.log(tabel);
-      // return res.status(200).json(tabel)
-      // console.log(categorylist);
+      // const categorylist = await categoryModel.find({});
+      const categorylist = await categoryModel.aggregate([
+        {
+          $lookup: {
+            from: "categories",
+            localField: "parent_id",
+            foreignField: "_id",
+            as: "category",
+          },
+        },
+        { "$match": { "status": 1 } },
+      ])
 
       return res.render("addproduct", {
         catlist: categorylist,
@@ -39,22 +46,22 @@ export default class Product {
         });
       }
       // console.log('dh====>>', req.file)
-      const { name, desc, discount, price, image, status } = req.body;
+      const { name, desc, discount, price, image, status, category } = req.body;
       // console.log("Body", req.body);
       const data = new productModel({
         name: name,
         desc: desc,
         discount: discount,
         price: price,
-        image: image,
-        status: true
+        status: true,
+        cat_id: category
       });
       // console.log("img", req.files); 
-      const body = req.body;
+      // const body = req.body;
       if (req.file) {
-        body.image = req.file.filename;
+        data.image = req.file.filename;
       }
-      const result = await productModel.create(body);
+      const result = await productModel.create(data);
       // console.log("save====>", result);
 
       return res.redirect("/product/list");
@@ -69,10 +76,7 @@ export default class Product {
       const perPage = 5;
       const page = req.query.page || 1;
       const recievedData = sorting(req.query);
-      // let searchKeyword = req.query.search;
       const searchKeyword = req.query.search as string;
-      // let mysort = { name: 1 }
-      // console.log(page, "  ", perPage, " ", perPage * Number(page) - perPage)
       let searchObj = {};
 
       if (searchKeyword) {
@@ -85,24 +89,44 @@ export default class Product {
       // console.log("searc=>>>>>",searchKeyword);
       // console.log(recievedData.sortMethod);
 
-      const result = await productModel
-        .find(searchObj)
-        .sort(recievedData.sortMethod)
-        .skip(perPage * Number(page) - perPage)
-        .limit(perPage);
+      const catData = await productModel.aggregate([
+        { $match: searchObj },
+        {
+          $lookup: {
+            from: "categories",
+            localField: "cat_id",
+            foreignField: "_id",
+            as: "category",
+          },
+        },
+        { "$unwind": "$category" },
+        { "$match": { "category.status": 1 } },
+        { "$sort": recievedData.sortMethod },
+        { "$skip": perPage * Number(page) - perPage },
+        { "$limit": perPage },
+      ])
+      // console.log(catData);
+
+      // const result = await productModel
+      //   .find(searchObj)
+      //   .sort(recievedData.sortMethod)
+      //   .skip(perPage * Number(page) - perPage)
+      //   .limit(perPage);
 
       const count = await productModel.count(searchObj);
-      // const count = await productModel.count(
-      //   searchKeyword ? { name: req.query.search } : {}
-      // );
-      // console.log(result)
+
+      // catData?.map((element) => {
+      //   // console.log(element.children)  
+      // })
+
       return res.render("listproduct", {
-        data: result,
+        data: catData,
         current: page,
         queryData: req.query,
         pages: Math.ceil(count / perPage),
         dodyData: undefined,
         search: searchKeyword,
+        categorie: catData
       });
     } catch (error) {
       console.log(error);
@@ -112,11 +136,32 @@ export default class Product {
   //   GET Edit Product Page    //
   editProductPage = async (req: Request, res: Response) => {
     try {
-      const results = await productModel.findById(req.params.id, req.body);
-      //   console.log(req.body);
+      const categorylist = await categoryModel.find({});
+      // console.log("catList==>", categorylist);
+
+      const results = await productModel.findById(req.params.id);
+      // console.log(results);
       return res.render("editproduct", {
         data: results,
+        catlist: categorylist
       });
+
+      //       const id = req.params.id;
+      //       const lookup = await productModel.aggregate([
+      //         {
+      //           $match: { _id: new mongoose.Types.ObjectId(`${id}`) },
+      //         },
+      //         {
+      //           $lookup: {
+      //             from: "categories",
+      //             localField: "category",
+      //             foreignField: "_id",
+      //             as: "info",
+      //           },
+      //         },
+      //       ]);
+      // console.log(lookup);
+
     } catch (error) {
       console.log(error);
     }
@@ -128,7 +173,7 @@ export default class Product {
       // const id = req.params.id;
       const body = req.body;
       const data = await productModel.findById(req.body.id)
-      // console.log(data ,body);
+      // console.log(body);
       // console.log(body.image);
       // console.log(body.productImage);
       // console.log(req.file?.filename);
@@ -137,8 +182,12 @@ export default class Product {
         body.image = req.file.filename;
         deleteFileExt(data.image);
       }
+      if (body.cat_id == "0") {
+        // body.parent = 1 
+        body.cat_id = null
+      }
 
-      const result = await productModel.findByIdAndUpdate(req.params.id, req.body, body);
+      const result = await productModel.findByIdAndUpdate(req.params.id, body);
       // console.log("img", req.file);
       // console.log("reshult=>>>", result);
       // console.log(data);
@@ -153,34 +202,46 @@ export default class Product {
   viewProductPage = async (req: Request, res: Response) => {
     try {
       const id = req.params.id;
-      // const viewData: any = await productModel.aggregate([
-      //   {
-      //     $match: { _id: new mongoose.Types.ObjectId(`${id}`) },
-      //   },
+      const viewData: any = await productModel.aggregate([
+        {
+          $match: { _id: new mongoose.Types.ObjectId(`${id}`) },
+        },
+        {
+          $lookup: {
+            from: "categories",
+            localField: "cat_id",
+            foreignField: "_id",
+            as: "categories",
+          },
+        },
+      ]);
+
+      // console.log("viewData==>", viewData);
+      // await productModel.aggregate([
       //   {
       //     $lookup: {
       //       from: "categories",
-      //       localField: "category",
-      //       foreignField: "_id",
-      //       as: "categories",
+      //       localField: "_id",
+      //       foreignField: "parent_id",
+      //       as: "children",
       //     },
       //   },
-      // ]);
+      // ])
+      // const catData = await categoryListData();
+      // const viewData = await productModel.findOne({
+      //   _id: new mongoose.Types.ObjectId(`${id}`)
+      // })
+      // console.log("catData==>>", catData[0].children);
+
+      // catData.map(item => console.log(item.children))
+
       // console.log("viewData==>", viewData);
-
-      const catData = await categoryListData();
-      const viewData = await productModel.findOne({
-        _id: new mongoose.Types.ObjectId(`${id}`)
-      })
-      console.log("catData==>>", catData[0].children);
-
-      console.log("viewData==>", viewData);
 
       // const product = viewData[0];
 
       return res.render("viewproduct", {
-        data: viewData,
-        categoryData: catData,
+        data: viewData[0],
+        // categoryData: catData,
       });
     } catch (error) {
       console.log(error);

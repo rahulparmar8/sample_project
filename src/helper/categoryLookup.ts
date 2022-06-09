@@ -14,7 +14,7 @@ const categoryListData = async () => {
             },
         },
     ])
-    console.log("dataCat", catData);
+    // console.log("dataCat", catData);
 
     return catData;
 }

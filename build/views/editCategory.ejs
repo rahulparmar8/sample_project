@@ -1,38 +1,54 @@
 <%- include('assets/navbar') %>
   <%- include('assets/header') %>
 
-  <div class="row" style="justify-content: center">
-    <div class="col-sm-6 mt-5">
-      <h2 class="alert alert-secondary text-center">Edit Product</h2>
-      <form method="POST" enctype="multipart/form-data">
-        <div class="mb-3">
-          <input hidden value="<%= data._id %>" id="id" name="id" type="text" class="form-control"
+    <div class="row" style="justify-content: center">
+      <div class="col-sm-6 mt-5">
+        <h2 class="alert alert-secondary text-center">Edit Catgory</h2>
+        <form method="POST" enctype="multipart/form-data">
+          <div class="mb-3">
+            <input hidden value="<%= data._id %>" id="id" name="id" type="text" class="form-control"
               autocomplete="off" />
-          <label for="name" class="form-label">Name</label>
-          <input value="<%= data.name %>" id="name" name="name" type="text" class="form-control" autocomplete="off" />
-        </div>
+            <label for="name" class="form-label">Name</label>
+            <input value="<%= data.name %>" id="name" name="name" type="text" class="form-control" autocomplete="off" />
+          </div>
 
-        <div class="mb-3">
-          <label for="desc" class="form-label">desc</label>
-          <textarea class="form-control" id="desc" name="desc" type="text" class="form-control" autocomplete="off"
-            rows="3"> <%= data.desc %>   </textarea>
-        </div>
+          <div class="mb-3">
+            <label for="desc" class="form-label">desc</label>
+            <textarea class="form-control" id="desc" name="desc" type="text" class="form-control" autocomplete="off"
+              rows="3"> <%= data.desc %>   </textarea>
+          </div>
 
-        <div class="form-group col-6">
-          <label for="productFile"> Image </label><span class="important"></span>
-          <td>
-            <img src="/uploads/<%= data.image %>" height="100px" width="100px"
-              alt="Sorry! Image not available at this time" />
-          </td>
-          <input type="file" class="form-control" id="image" name="image" />
-        </div>
+          <div class="form-group col-6">
+            <label for="productFile"> Image </label><span class="important"></span>
+            <td>
+              <img src="/uploads/<%= data.image %>" height="100px" width="100px"
+                alt="Sorry! Image not available at this time" />
+            </td>
+            <input type="file" class="form-control" id="image" name="image" />
+          </div>
+          <br />
+         
+          <div class="form-group col-6">
+            <label for="categoryCheck">Category</label><span class="important">*</span>
+            <select class="form-control" name="cat_id" id="categoryCheck">
+              <option value=0>Select Category</option>
+              <% categorylist.map((ele)=> { %>
+                <option value=<%=ele._id %>
+                  <%= (data.parent_id && data.parent_id.toString().includes(ele._id.toString()) ) ? 'selected' : '' %> ><%= ele.name %>
+                </option>
+                <% }) %>
+            </select>
+          </div>
 
-        <br />
-        <button type="submit" class="btn btn-outline-info">Update</button> &nbsp;
-        <button type="submit" class="btn btn-outline-light">Cancel</button> &nbsp;
-        <a href="/category/list/" class="btn btn-outline-secondary">Back to Home</a>
-      </form>
+  
+      
+
+          <br />
+          <button type="submit" class="btn btn-outline-info">Update</button> &nbsp;
+          <a href="/category/list/" class="btn btn-outline-danger">Cancel </a>&nbsp;
+          <a href="/category/list/" class="btn btn-outline-secondary">Back to Home</a>
+        </form>
+      </div>
     </div>
-  </div>
 
-  <%- include('assets/footer') %>
+    <%- include('assets/footer') %>

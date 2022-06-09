@@ -13,6 +13,7 @@ router.post("/add/", upload.single("image"), category.addCategoryData);
 router.get("/edit/:id", category.editCategoryPage);
 router.post("/edit/:id",upload.single("image"), category.editCategoryData);
 router.get("/view/:id", category.viewCategoryPage);
+router.get("/list/status/:id/:data/", category.statusCategory);
 router.get("/delete/:id/", category.deleteCategory);
 
 export default router;
