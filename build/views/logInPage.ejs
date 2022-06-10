@@ -1,0 +1,69 @@
+<%- include('assets/navbar') %>
+    <%- include('assets/header') %>
+
+    <div class="row" style="justify-content: center">
+        <div class="col-sm-6 mt-5">
+          <% if(typeof alert != 'undefined') { %> 
+            <% alert.forEach(function(error) {
+          %>
+          <div style="color: red"><%= error.msg %></div>
+          <% })} %> <% if(typeof message != 'undefined') { %>
+          <div style="color: green"><%= message %></div>
+          <% } %>
+            <h2 class="alert alert-info text-center">Login Page</h2>
+            <form method="POST" id="loginform">
+            
+                <div class="mb-3">
+                  <label for="email" class="form-label">Email</label>
+                  <input id="email" name="email" type="text" class="form-control" autocomplete="off" />
+              </div>
+            
+            <div class="mb-3">
+              <label for="password" class="form-label">Password</label>
+              <input id="password" name="password" type="password" class="form-control" id="mainpassword" autocomplete="off" />
+            </div>
+           
+              
+                    <br />
+                    <a href="">
+                      <button type="submit" class="btn btn-outline-primary">Log In</button>
+                    </a>&nbsp;
+                    <a href="/register">
+                <button type="button" class="btn btn-outline-primary">Register</button></a>
+                <br /><br />
+                <a href="">Forgot Password ?</a>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+          $("#loginform").validate({
+            rules: {
+              email: {
+                required: true,
+                email: true,
+              },
+              password: {
+                required: true,
+                minlength: 6,
+                maxlength: 20,
+              },
+             
+            },
+            message: {
+              email: {
+                email: "PLease enter valid email",
+              },
+              password: {
+                required: true,
+                minlength: "Password must contain 6 characters",
+                maxlength: "Password must not exceed of 20 characters",
+              },
+            },
+          });
+        });
+      </script>
+
+
+    <%- include('assets/footer'); %>

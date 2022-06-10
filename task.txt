@@ -22,4 +22,8 @@
     add activ /inactive in category module
     catgory should not come in product add/edit when it is inactive
 
-    category module completed
+-Signup page
+-User Name,password, phone number ,email,image
+-With all validation
+-Email should be send after signup
+-Same email should not register

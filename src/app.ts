@@ -1,21 +1,29 @@
 import express from "express";
 import path from "path";
+import dotenv from "dotenv";
 import mongoose from "mongoose";
 import productRoutes from "./routes/produtRoutes";
 import categoryRoutes from "./routes/categoryRoutes";
 import bodyParser from "body-parser";
-// import session from "express-session";
+import userRoutes from "./routes/userRoutes";
+import session from "express-session";
 
+dotenv.config();
 
 const app = express();
 const port = 3000;
 const DATABASE_URL = "mongodb://localhost:27017/node_practice";
 
-// const multer = require('multer')
-// const upload = multer({ dest: "../uploads" });
 
 
-// Session //
+app.use(
+  session({
+    secret: process.env.EXPRESS_SESSION_SECRET as string,
+    resave: false,
+    saveUninitialized: true,
+  })
+);
+
 // app.use(
 //   session({
 //       secret: "imkey",
@@ -45,10 +53,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 
 app.get("/home", (req, res) => {
-  res.render("home");
+  res.render("registerPage");
 });
+app.use("/", userRoutes)
 app.use("/product", productRoutes);
 app.use("/category", categoryRoutes)
+
 
 // Database connection //
 mongoose.connect(`mongodb://localhost:27017/node_practice`).then(() => {

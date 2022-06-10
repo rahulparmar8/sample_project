@@ -1,0 +1,102 @@
+<%- include('assets/navbar') %>
+    <%- include('assets/header') %>
+
+
+  <div class="row" style="justify-content: center">
+    <div class="col-sm-6 mt-5">
+        <h2 class="alert alert-info text-center">Register Page</h2>
+        <form method="POST" enctype="multipart/form-data" id="registerform">
+          <!-- <% if(typeof alert != 'undefined') { %> 
+            <% alert.forEach(function(error) {%>
+          <div style="color: red"><%= error.msg %></div>
+          <% })} %>    
+          <% if(typeof errorMessage != 'undefined') { %> 
+          <div style="color: red"><%= errorMessage %></div>
+          <% } %> -->
+            <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input   id="name" name="name" type="text" class="form-control" autocomplete="off" />
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input   id="email" name="email" type="text" class="form-control" autocomplete="off" />
+          </div>
+          <div class="mb-3">
+            <label for="mob" class="form-label">Mob No</label>
+            <input   id="mob" name="mob" type="text" class="form-control" autocomplete="off" />
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input   id="password" name="password" type="password" class="form-control" id="mainpassword" autocomplete="off" />
+      </div>
+            <div class="form-group col-6">
+                <label for="productFile">Image</label><span class="important"></span>
+                <input  type="file" class="form-control" id="image" name="image" />
+            </div>
+                <br />
+                <button type="submit" class="btn btn-outline-primary">Register</button>
+                <!-- <a href="/login">
+                  <button type="button" class="btn btn-outline-primary">Log In</button>
+                </a> -->
+           
+        </form>
+    </div>
+</div>
+
+
+  <script>
+    $(document).ready(function () {
+      $("#registerform").validate({
+        rules: {
+          email: {
+            required: true,
+            email: true,
+          },
+          name: {
+            required: true,
+            minlength: 5,
+            maxlength: 80,
+          },
+          mob: {
+              required: true,
+              minlength:10,
+              maxlength:10
+          },
+          password: {
+            required: true,
+            minlength: 6,
+            maxlength: 20,
+          },
+          image: {
+            required: true,
+            extension: "jpg|jpeg|png|gif"
+          },
+        },
+        message: {
+          email: {
+            email: "PLease enter valid email",
+          },
+          name: {
+            minlength: "Name must contain atleast 5 characters",
+            maxlength: "Name must not contain more than 80 characters",
+          },
+          password: {
+            required: true,
+            minlength: "Password must contain 6 characters",
+            maxlength: "Password must not exceed of 20 characters",
+          },
+          mob: {
+            mob:"Number is required"
+          },
+          image: {
+            required: "Please upload file.",
+            extension: "Please upload file in these format only (jpg, jpeg, png)."
+         },
+        },
+      });
+    });
+  </script>
+
+  </html>
+
+  <%- include('assets/footer'); %>
